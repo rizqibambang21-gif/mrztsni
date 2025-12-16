@@ -1,0 +1,548 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: #f4f4f9;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background-color: #fff;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+  width: 768px;
+  max-width: 100%;
+  min-height: 480px;
+}
+
+.container p {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.3px;
+  margin: 20px 0;
+}
+
+.container span {
+  font-size: 12px;
+}
+
+.container a {
+  color: #333;
+  font-size: 13px;
+  text-decoration: none;
+  margin: 15px 0 10px;
+}
+
+.container button {
+  background-color: #512da8;
+  color: #fff;
+  font-size: 12px;
+  padding: 10px 45px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.container button.hidden {
+  background-color: transparent;
+  border-color: #fff;
+}
+
+.container form {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  height: 100%;
+}
+
+.container input {
+  background-color: #eee;
+  border: none;
+  margin: 8px 0;
+  padding: 10px 15px;
+  font-size: 13px;
+  border-radius: 8px;
+  width: 100%;
+  outline: none;
+}
+
+/* Mengatur posisi dan transisi untuk form */
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+}
+
+/* Posisi Awal: Sign In berada di kiri */
+.sign-in {
+  left: 0;
+  width: 50%;
+  z-index: 2;
+}
+
+/* Ketika class 'active' ditambahkan ke container, geser Sign In ke kanan */
+.container.active .sign-in {
+  transform: translateX(100%);
+}
+
+/* Posisi Awal: Sign Up berada di kiri, namun tersembunyi */
+.sign-up {
+  left: 0;
+  width: 50%;
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Ketika class 'active' ditambahkan: Geser Sign Up ke kanan, jadikan terlihat */
+.container.active .sign-up {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+  animation: move 0.6s;
+}
+
+/* Animasi agar Sign Up muncul setelah Sign In bergeser */
+@keyframes move {
+
+  0%,
+  49.99% {
+    opacity: 0;
+    z-index: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 1;
+    z-index: 5;
+  }
+}
+
+.social-icons {
+  margin: 20px 0;
+}
+
+.social-icons a {
+  border: 1px solid #ccc;
+  border-radius: 20%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 3px;
+  width: 40px;
+  height: 40px;
+}
+
+/* Mengatur posisi dan transisi untuk panel toggle */
+.toggle-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.6s ease-in-out;
+  border-radius: 150px 0 0 100px;
+  z-index: 1000;
+}
+
+/* Ketika class 'active' ditambahkan, geser panel toggle ke kiri */
+.container.active .toggle-container {
+  transform: translateX(-100%);
+  border-radius: 0 150px 100px 0;
+}
+
+.toggle {
+  background-color: #512da8;
+  height: 100%;
+  background: linear-gradient(to right, #5c6bc0, #512da8);
+  color: #fff;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+/* Ketika class 'active' ditambahkan, geser isi toggle */
+.container.active .toggle {
+  transform: translateX(50%);
+}
+
+.toggle-panel {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 30px;
+  text-align: center;
+  top: 0;
+  transform: translateX(0);
+  transition: all 0.6s ease-in-out;
+}
+
+/* Posisi Awal: Toggle Left tersembunyi */
+.toggle-left {
+  transform: translateX(-200%);
+}
+
+/* Ketika class 'active' ditambahkan, tampilkan Toggle Left */
+.container.active .toggle-left {
+  transform: translateX(0);
+}
+
+/* Posisi Awal: Toggle Right terlihat */
+.toggle-right {
+  right: 0;
+  transform: translateX(0);
+}
+
+/* Ketika class 'active' ditambahkan, sembunyikan Toggle Right */
+.container.active .toggle-right {
+  transform: translateX(200%);
+}
+
+/* --- Style Navbar --- */
+.navbar {
+  background-color: #38a169;
+  color: white;
+  padding: 15px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 25px;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.3s;
+}
+
+.navbar-links a:hover {
+  opacity: 0.8;
+}
+
+/* --- Style Content --- */
+.content {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.welcome-header {
+  font-size: 2.5rem;
+  color: #38a169;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-text {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.class-layout {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.semester-menu {
+  flex: 1;
+  max-width: 300px;
+  background: linear-gradient(135deg, #38a169, #2f855a);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: white;
+  text-align: center;
+}
+
+.semester-menu h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.semester-btn {
+  background-color: #fff;
+  color: #38a169;
+  font-size: 16px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 10px 0;
+  width: 100%;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.semester-btn:hover {
+  background-color: #e6fffa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.pertemuan-section {
+  flex: 2;
+  background: linear-gradient(135deg, #f7fafc, #edf2f7);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  display: block;
+}
+
+.pertemuan-section.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.pertemuan-section h3 {
+  color: #38a169;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.pertemuan-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.pertemuan-link {
+  background-color: #fff;
+  color: #333;
+  text-decoration: none;
+  padding: 15px 20px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------- */
+/* CTA Button style used in indikator and kuis pages */
+/* --------------------------------------------------- */
+.cta-button {
+  display: inline-block;
+  background-color: #38a169;
+  color: white;
+  padding: 15px 40px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 20px;
+}
+
+.cta-button:hover {
+  background-color: #2e8b57;
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------- */
+/* Hero Section style for indikator and kuis pages */
+/* --------------------------------------------------- */
+.hero {
+  padding: 50px 20px 20px;
+  text-align: center;
+  background-color: #f4f4f9;
+}
+
+.hero h1 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.hero p {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 40px;
+}
+
+/* ================================================= */
+/* --- RESPONSIVE DESIGN (MOBILE & TABLET) for Global Style --- */
+/* ================================================= */
+
+@media (max-width: 768px) {
+
+  /* 1. Login/Register Container Responsif */
+  .container {
+    width: 100%;
+    min-height: auto;
+    /* Biarkan tinggi menyesuaikan konten */
+    border-radius: 15px;
+    /* Radius lebih kecil */
+    margin: 20px;
+    /* Jarak dari tepi layar */
+  }
+
+  .form-container form {
+    padding: 0 20px;
+    /* Padding form lebih kecil */
+  }
+
+  .toggle-container {
+    display: none;
+    /* Sembunyikan panel animasi di mobile untuk simplifikasi */
+  }
+
+  .form-container {
+    width: 100%;
+    /* Form memenuhi layar */
+    position: relative;
+    height: auto;
+    padding: 40px 0;
+  }
+
+  .sign-in,
+  .sign-up {
+    width: 100%;
+    /* Penuhi lebar */
+    left: 0;
+    z-index: 5;
+  }
+
+  .sign-up {
+    display: none;
+    /* Sembunyikan sign up defaultnya, gunakan tombol toggle manual jika perlu (atau biarkan layout ini khusus login) */
+    /* Catatan: Template login animasi ini mungkin butuh penyesuaian JS untuk mobile, 
+           tapi untuk sekarang kita fokus agar konten terbaca */
+  }
+
+
+  /* 2. Navbar Responsif (Sama seperti Home) */
+  .navbar {
+    flex-direction: column;
+    padding: 15px 20px;
+    gap: 15px;
+  }
+
+  .navbar-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+  }
+
+  .navbar-links a {
+    margin-left: 0;
+    font-size: 14px;
+  }
+
+  /* 3. Layout Kelas (Sidebar & Konten) Stack ke Bawah */
+  .class-layout {
+    flex-direction: column;
+    align-items: center;
+    /* Tengah secara horizontal */
+    gap: 20px;
+    /* Jarak antar elemen berkurang */
+  }
+
+  .semester-menu {
+    max-width: 100%;
+    /* Penuhi lebar */
+    width: 100%;
+  }
+
+  .pertemuan-section {
+    width: 100%;
+    /* Penuhi lebar */
+    margin-left: 0;
+    /* Reset margin */
+  }
+
+  /* 4. Grid Pertemuan */
+  .pertemuan-list {
+    grid-template-columns: 1fr;
+    /* Satu kolom untuk HP */
+  }
+
+  /* 5. Teks & Header */
+  .welcome-header {
+    font-size: 1.8rem;
+    /* Lebih kecil */
+  }
+
+  .welcome-text {
+    font-size: 1rem;
+  }
+}
+
+
+/* --------------------------------------------------- */
+/* Additional responsive tweaks for Guru page */
+/* --------------------------------------------------- */
+@media (max-width: 768px) {
+  .guru-container {
+    width: 100% !important;
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .qr-output {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-generate {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  /* Ensure content does not hide behind fixed navbar */
+  .content,
+  .guru-container {
+    margin-top: 80px;
+  }
+}

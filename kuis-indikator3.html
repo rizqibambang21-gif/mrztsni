@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Indikator 3</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="navbar.css">
+    <style>
+        /* (Gaya CSS Kuis di sini, sama persis dengan sebelumnya) */
+        .quiz-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .soal-item {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .soal-item label {
+            display: block;
+            margin: 10px 0;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .soal-item input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            background-color: #38a169;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #2e8b57;
+        }
+
+        #hasil-kuis {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .lulus {
+            background-color: #e6ffed;
+            color: #38a169;
+        }
+
+        .gagal {
+            background-color: #fee2e2;
+            color: #e53e3e;
+        }
+    </style>
+    <link rel='stylesheet' href='animations.css'>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="navbar-brand">Teman Belajar</div>
+        <div class="navbar-links">
+            <a href="home.html">Home</a>
+            <a href="profil-sekolah.html">Profil Sekolah</a>
+            <a href="kelas.html">Kelas</a>
+        </div>
+    </div>
+
+    <section class="hero">
+        <h1>Kuis Indikator 3: Keamanan Jaringan</h1>
+        <p>Jawab 5 soal berikut. Raih nilai 4 ke atas untuk menyelesaikan pembelajaran!</p>
+    </section>
+
+    <div class="quiz-container">
+        <form id="quiz-form">
+
+            <div class="soal-item">
+                <p><strong>1. Apa fungsi utama firewall dalam keamanan jaringan?</strong></p>
+                <label><input type="radio" name="soal1" value="A"> Mempercepat koneksi internet</label>
+                <label><input type="radio" name="soal1" value="B"> Memantau dan mengontrol lalu lintas jaringan</label>
+                <label><input type="radio" name="soal1" value="C"> Menyimpan data pengguna</label>
+            </div>
+
+            <div class="soal-item">
+                <p><strong>2. Jenis firewall yang diinstal di komputer individu disebut...</strong></p>
+                <label><input type="radio" name="soal2" value="A"> Firewall Perangkat Keras</label>
+                <label><input type="radio" name="soal2" value="B"> Firewall Perangkat Lunak</label>
+                <label><input type="radio" name="soal2" value="C"> Firewall Cloud</label>
+            </div>
+
+            <div class="soal-item">
+                <p><strong>3. Salah satu manfaat keamanan jaringan adalah...</strong></p>
+                <label><input type="radio" name="soal3" value="A"> Meningkatkan kecepatan download</label>
+                <label><input type="radio" name="soal3" value="B"> Melindungi data dari akses tidak sah</label>
+                <label><input type="radio" name="soal3" value="C"> Mengurangi penggunaan bandwidth</label>
+            </div>
+
+            <div class="soal-item">
+                <p><strong>4. Protokol keamanan yang digunakan untuk mengenkripsi data dalam jaringan adalah...</strong>
+                </p>
+                <label><input type="radio" name="soal4" value="A"> HTTP</label>
+                <label><input type="radio" name="soal4" value="B"> HTTPS</label>
+                <label><input type="radio" name="soal4" value="C"> FTP</label>
+            </div>
+
+            <div class="soal-item">
+                <p><strong>5. Apa yang harus dilakukan untuk menjaga keamanan jaringan rumah?</strong></p>
+                <label><input type="radio" name="soal5" value="A"> Menggunakan password default router</label>
+                <label><input type="radio" name="soal5" value="B"> Mengubah password WiFi dan mengaktifkan enkripsi
+                    WPA3</label>
+                <label><input type="radio" name="soal5" value="C"> Membagikan password ke semua tetangga</label>
+            </div>
+
+            <button type="submit" class="submit-btn">Cek Jawaban dan Selesai</button>
+        </form>
+
+        <div id="hasil-kuis"></div>
+    </div>
+
+    <script src="kuis3.js"></script>
+
+</body>
+
+</html>

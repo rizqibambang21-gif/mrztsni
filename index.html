@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Login Page | Teman Belajar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    /* CSS yang sudah Anda sediakan */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      /* Menggunakan Gambar dari Folder img */
+      /* PASTIKAN PATH INI BENAR */
+      background-image: url('img/BG_1.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+      width: 768px;
+      max-width: 100%;
+      min-height: 480px;
+    }
+
+    .container p {
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.3px;
+      margin: 20px 0;
+    }
+
+    .container span {
+      font-size: 12px;
+    }
+
+    .container a {
+      color: #333;
+      font-size: 13px;
+      text-decoration: none;
+      margin: 15px 0 10px;
+    }
+
+    .container button {
+      background-color: #38a169;
+      /* WARNA HIJAU UTAMA */
+      color: #fff;
+      font-size: 12px;
+      padding: 10px 45px;
+      border: 1px solid #38a169;
+      border-radius: 8px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .container button.hidden {
+      background-color: transparent;
+      border-color: #fff;
+    }
+
+    .container form {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0 40px;
+      height: 100%;
+    }
+
+    .container input {
+      background-color: #eee;
+      border: none;
+      margin: 8px 0;
+      padding: 10px 15px;
+      font-size: 13px;
+      border-radius: 8px;
+      width: 100%;
+      outline: none;
+    }
+
+    .form-container {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      transition: all 0.6s ease-in-out;
+    }
+
+    .sign-in {
+      left: 0;
+      width: 50%;
+      z-index: 2;
+    }
+
+    .container.active .sign-in {
+      transform: translateX(100%);
+    }
+
+    .sign-up {
+      left: 0;
+      width: 50%;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .container.active .sign-up {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 5;
+      animation: move 0.6s;
+    }
+
+    @keyframes move {
+
+      0%,
+      49.99% {
+        opacity: 0;
+        z-index: 1;
+      }
+
+      50%,
+      100% {
+        opacity: 1;
+        z-index: 5;
+      }
+    }
+
+    .social-icons {
+      margin: 20px 0;
+    }
+
+    .social-icons a {
+      border: 1px solid #ccc;
+      border-radius: 20%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 3px;
+      width: 40px;
+      height: 40px;
+    }
+
+    .toggle-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      transition: all 0.6s ease-in-out;
+      border-radius: 150px 0 0 100px;
+      z-index: 1000;
+    }
+
+    .container.active .toggle-container {
+      transform: translateX(-100%);
+      border-radius: 0 150px 100px 0;
+    }
+
+    .toggle {
+      background-color: #38a169;
+      height: 100%;
+      background: linear-gradient(to right, #38a169, #38a169);
+      color: #fff;
+      position: relative;
+      left: -100%;
+      height: 100%;
+      width: 200%;
+      transform: translateX(0);
+      transition: all 0.6s ease-in-out;
+    }
+
+    .container.active .toggle {
+      transform: translateX(50%);
+    }
+
+    .toggle-panel {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0 30px;
+      text-align: center;
+      top: 0;
+      transform: translateX(0);
+      transition: all 0.6s ease-in-out;
+    }
+
+    .toggle-left {
+      transform: translateX(-200%);
+    }
+
+    .container.active .toggle-left {
+      transform: translateX(0);
+    }
+
+    .toggle-right {
+      right: 0;
+      transform: translateX(0);
+    }
+
+    .container.active .toggle-right {
+      transform: translateX(200%);
+    }
+
+    /* --- CSS Modal Kustom --- */
+
+    .custom-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      backdrop-filter: blur(2px);
+    }
+
+    .custom-modal-content {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      transform: scale(0.8);
+      animation: modal-appear 0.3s forwards cubic-bezier(0.2, 0.8, 0.4, 1.2);
+    }
+
+    @keyframes modal-appear {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .custom-modal-content h2 {
+      font-size: 24px;
+      margin-top: 15px;
+      color: #333;
+      font-weight: 700;
+    }
+
+    .custom-modal-content p {
+      font-size: 16px;
+      color: #666;
+      margin: 15px 0 25px 0;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .modal-icon {
+      font-size: 50px;
+      line-height: 1;
+    }
+
+    .success-icon {
+      color: #38a169;
+    }
+
+    .error-icon {
+      color: #e53e3e;
+    }
+
+    .modal-close-btn {
+      background-color: #38a169;
+      color: white;
+      font-size: 16px;
+      padding: 10px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .modal-close-btn:hover {
+      background-color: #2e8b57;
+    }
+
+    /* --- MOBILE RESPONSIVE CSS --- */
+    .mobile-toggle {
+      display: none;
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .mobile-toggle a {
+      color: #38a169;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+        overflow-y: auto;
+        /* Allow scrolling on mobile */
+      }
+
+      .container button {
+        padding: 10px 20px;
+        /* Smaller padding on mobile */
+      }
+
+      .toggle-container {
+        display: none;
+        /* Hide the sliding panel on mobile */
+      }
+
+      .form-container {
+        width: 100%;
+        padding: 40px 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .sign-in,
+      .sign-up {
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        transition: opacity 0.6s ease-in-out;
+      }
+
+      /* Adjust animations for mobile - use Opacity instead of Translate */
+      .sign-in {
+        z-index: 2;
+        opacity: 1;
+      }
+
+      .container.active .sign-in {
+        transform: none;
+        /* Disable horizontal move */
+        opacity: 0;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .sign-up {
+        opacity: 0;
+        z-index: 1;
+        transform: none;
+        /* Reset initial position */
+        pointer-events: none;
+      }
+
+      .container.active .sign-up {
+        transform: none;
+        opacity: 1;
+        z-index: 5;
+        animation: none;
+        /* Disable complex keyframe */
+        pointer-events: auto;
+      }
+
+      /* Show the mobile toggle links */
+      .mobile-toggle {
+        display: block;
+      }
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<link rel='stylesheet' href='animations.css'></head>
+
+<body>
+
+  <div class="container" id="container">
+
+    <div class="form-container sign-up">
+      <form id="signup-form">
+        <h1>Create Account</h1>
+        <div class="social-icons">
+          <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <span>use your email for registration</span>
+
+        <input type="text" id="signup-name" placeholder="Nama Lengkap" required>
+        <input type="text" id="signup-nis" placeholder="NIS" required>
+        <input type="text" id="signup-class" placeholder="Kelas" required>
+        <input type="email" id="signup-email" placeholder="Email" required>
+        <input type="password" id="signup-password" placeholder="Password" required>
+
+        <button type="submit">Sign Up</button>
+        <div class="mobile-toggle">
+          Already have an account? <a id="mobile-login-btn">Sign In</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="form-container sign-in">
+      <form id="signin-form">
+        <h1>Sign In</h1>
+        <div class="social-icons">
+          <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+        <span>use your email and password</span>
+
+        <input type="email" id="signin-email" placeholder="Email" required>
+        <input type="password" id="signin-password" placeholder="Password" required>
+
+        <a href="#">Forget Your Password?</a>
+        <button type="submit">Sign In</button>
+        <div class="mobile-toggle">
+          Don't have an account? <a id="mobile-register-btn">Sign Up</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="toggle-container">
+      <div class="toggle">
+        <div class="toggle-panel toggle-left">
+          <h1>Welcome Back!</h1>
+          <p>Enter your personal details to use all of site features</p>
+          <button class="hidden" id="login">Sign In</button>
+        </div>
+        <div class="toggle-panel toggle-right">
+          <h1>Hello, Friend!</h1>
+          <p>Register with your personal details to use all of site features</p>
+          <button class="hidden" id="register">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="custom-modal" class="custom-modal-overlay">
+    <div class="custom-modal-content">
+      <div id="modal-icon" class="modal-icon"></div>
+      <h2 id="modal-title"></h2>
+      <p id="modal-message"></p>
+      <button id="modal-close-btn" class="modal-close-btn">OK</button>
+    </div>
+  </div>
+  <script>
+    // 1. Konfigurasi Firebase Anda
+    const firebaseConfig = {
+      apiKey: "AIzaSyBaFa2_d4almWd1wBlmPdzv9aGOa0e0m3A",
+      authDomain: "daftarhadit-dfa3a.firebaseapp.com",
+      projectId: "daftarhadit-dfa3a",
+      storageBucket: "daftarhadit-dfa3a.firebasestorage.app",
+      messagingSenderId: "438675023798",
+      appId: "1:438675023798:web:3afc376cd435f0154fc317",
+      measurementId: "G-XCNLPJSS57"
+    };
+
+    // Inisialisasi Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // --- Kontrol Tampilan (Switch Form) ---
+    const container = document.getElementById('container');
+    const registerBtn = document.getElementById('register');
+    const loginBtn = document.getElementById('login');
+
+    registerBtn.addEventListener('click', () => {
+      container.classList.add("active");
+    });
+
+    loginBtn.addEventListener('click', () => {
+      container.classList.remove("active");
+    });
+
+    // Mobile Toggle Logic
+    const mobileLoginBtn = document.getElementById('mobile-login-btn');
+    const mobileRegisterBtn = document.getElementById('mobile-register-btn');
+
+    if (mobileLoginBtn) {
+      mobileLoginBtn.addEventListener('click', () => {
+        container.classList.remove("active");
+      });
+    }
+
+    if (mobileRegisterBtn) {
+      mobileRegisterBtn.addEventListener('click', () => {
+        container.classList.add("active");
+      });
+    }
+
+    // --- Logika Firebase Authentication ---
+    const signupForm = document.getElementById('signup-form');
+    const signinForm = document.getElementById('signin-form');
+
+    const signupEmail = document.getElementById('signup-email');
+    const signupPassword = document.getElementById('signup-password');
+
+    const signinEmail = document.getElementById('signin-email');
+    const signinPassword = document.getElementById('signin-password');
+
+
+    // #################################################
+    // # FUNGSI MODAL KUSTOM
+    // #################################################
+    const modal = document.getElementById('custom-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalMessage = document.getElementById('modal-message');
+    const modalIcon = document.getElementById('modal-icon');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+
+    // Fungsi untuk menampilkan modal dengan pesan kustom
+    function showCustomAlert(title, message, iconClass, successCallback = null) {
+      modalTitle.textContent = title;
+      modalMessage.innerHTML = message;
+      modalIcon.className = 'modal-icon ' + iconClass;
+
+      modalCloseBtn.onclick = null;
+
+      modalCloseBtn.onclick = () => {
+        modal.style.display = 'none';
+        if (successCallback) {
+          successCallback();
+        }
+      };
+
+      modal.style.display = 'flex';
+    }
+
+
+    // #################################################
+    // # 1. FUNGSI SIGN UP (Mendaftar) - GUNAKAN MODAL KUSTOM
+    // #################################################
+
+    const signupName = document.getElementById('signup-name');
+    const signupNis = document.getElementById('signup-nis');
+    const signupClass = document.getElementById('signup-class');
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      console.log("Attempting to Register...");
+
+      const name = signupName.value;
+      const nis = signupNis.value;
+      const classId = signupClass.value;
+      const email = signupEmail.value;
+      const password = signupPassword.value;
+
+      console.log("Data collected:", { name, nis, classId, email });
+
+      if (password.length < 6) {
+        showCustomAlert("Gagal Mendaftar", "Password harus minimal **6 karakter**.", "fas fa-exclamation-triangle error-icon");
+        return;
+      }
+
+      try {
+        // 1. Buat akun di Firebase Authentication
+        console.log("Creating user in Auth...");
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        console.log("User created in Auth:", user.uid);
+
+        // 2. Simpan data siswa ke Firestore
+        console.log("Saving to Firestore...");
+
+        // Ensure Firestore is initialized
+        if (!db) {
+          throw new Error("Firestore database is not initialized.");
+        }
+
+        await db.collection('users').doc(user.uid).set({
+          nama: name,
+          nis: nis,
+          email: email,
+          class_id: classId,
+          role: "siswa",
+          created_at: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log("Data saved to Firestore.");
+
+        // Modal Sukses dan Navigasi
+        showCustomAlert(
+          "🎉 Pendaftaran Berhasil!",
+          "Akun Anda telah dibuat dan data telah disimpan. Anda akan diarahkan ke halaman Pembelajaran.",
+          "fas fa-check-circle success-icon",
+          () => {
+            window.location.href = "kelas.html";
+          }
+        );
+
+      } catch (error) {
+        console.error("Full Registration Error:", error);
+
+        const errorMessage = error.message;
+        let userMessage = "Pendaftaran gagal. Silakan coba lagi.";
+
+        if (error.code === 'auth/email-already-in-use') {
+          userMessage = 'Email sudah terdaftar. Silakan **Sign In**.';
+        } else if (error.code === 'auth/invalid-email') {
+          userMessage = 'Format email tidak valid.';
+        } else if (error.message.includes("Firestore")) {
+          userMessage = "Gagal menyimpan data (Firestore). Koneksi buruk atau izin ditolak.";
+        } else {
+          userMessage = errorMessage;
+        }
+
+        // Fallback alert if custom modal fails
+        try {
+          showCustomAlert("Gagal Mendaftar", userMessage, "fas fa-times-circle error-icon");
+        } catch (modalError) {
+          alert("Gagal Mendaftar: " + userMessage);
+        }
+      }
+    });
+
+
+    // #################################################
+    // # 2. FUNGSI SIGN IN (Masuk) - GUNAKAN MODAL KUSTOM
+    // #################################################
+
+    signinForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = signinEmail.value;
+      const password = signinPassword.value;
+
+      try {
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+
+        // Modal Sukses dan Navigasi
+        showCustomAlert(
+          "✅ Login Berhasil!",
+          "Selamat datang! Anda akan diarahkan ke halaman Kelas.",
+          "fas fa-sign-in-alt success-icon",
+          () => {
+            localStorage.setItem('isLoggedIn', 'true'); // Flag untuk UI responsif
+            window.location.href = "kelas.html";
+          }
+        );
+
+      } catch (error) {
+        const errorMessage = error.message;
+        let userMessage = "Login gagal. Silakan coba lagi.";
+
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+          userMessage = 'Email atau **Kata Sandi** salah.';
+        }
+
+        showCustomAlert("Gagal Login", userMessage, "fas fa-lock error-icon");
+        console.error("Kesalahan Login:", error);
+      }
+    });
+  </script>
+</body>
+
+</html>

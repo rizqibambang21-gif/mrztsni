@@ -1,0 +1,80 @@
+/* ================================================= */
+/* GLOBAL STYLES */
+/* ================================================= */
+
+body {
+    padding-top: 80px;
+    /* Compensate for fixed navbar height (70px + 10px breathing room) */
+}
+
+/* ================================================= */
+/* NAVBAR STYLES - Consistent across all pages */
+/* ================================================= */
+
+.navbar {
+    background-color: #38a169;
+    color: white;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    /* Changed to fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
+    /* Ensure padding doesn't affect width */
+    height: 70px;
+    /* Enforce consistent height */
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 25px;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.3s;
+    font-size: 18px;
+    /* Increased from default */
+}
+
+.navbar-links a:hover {
+    opacity: 0.8;
+}
+
+/* ================================================= */
+/* RESPONSIVE NAVBAR for Mobile */
+/* ================================================= */
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+    }
+
+    .navbar-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .navbar-links a {
+        font-size: 16px;
+        /* Increased from 14px */
+    }
+}
